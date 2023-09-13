@@ -24,7 +24,7 @@ jobs:
         with:
            lfs: true
            ref: release
-           token: ${{ secrets.PERSONAL_TOKEN }}
+           token: ${{ secrets.PAT_TOKEN }}
            repository: EpicGames/UnrealEngine
            path: Unreal
       - name: Build Unreal Engine
