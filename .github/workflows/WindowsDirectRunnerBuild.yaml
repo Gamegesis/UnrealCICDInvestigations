@@ -1,4 +1,4 @@
-name: Unreal Linux Docker Image Project Build
+name: Windows Direct Project Build
 on: 
   workflow_dispatch:
     inputs:
