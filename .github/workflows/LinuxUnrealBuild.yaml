@@ -39,5 +39,5 @@ jobs:
           cd ~
           ls
           echo ${{ inputs.project_file }}
-        # Engine/Build/BatchFiles/RunUAT.sh BuildCookRun -utf8output -platform=Windows -clientconfig=Shipping -serverconfig=Shipping -project=/project/${{ inputs.project_file }}.uproject -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory=/project/Packaged
+        # Engine/Build/BatchFiles/RunUAT.sh BuildCookRun -utf8output -platform=Linux -clientconfig=Shipping -serverconfig=Shipping -project=/project/${{ inputs.project_file }}.uproject -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory=/project/Packaged
 
