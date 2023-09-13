@@ -9,7 +9,7 @@ on:
 
 jobs:
   docker_linux_build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container: 
       image: ghcr.io/epicgames/unreal-engine:dev-5.1.1
       credentials:
