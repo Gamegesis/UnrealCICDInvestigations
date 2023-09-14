@@ -11,6 +11,8 @@ jobs:
   windows_direct_runner_build:
     runs-on: self-hosted
     steps:
+      - name: Config Git for Long Paths
+        run: git config --global core.longpaths true
       - name: Caching Unreal 
         id: UnrealEngine_Cache
         uses: actions/cache@v3
