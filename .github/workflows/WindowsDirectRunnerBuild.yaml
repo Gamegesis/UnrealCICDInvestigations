@@ -36,10 +36,23 @@ jobs:
            .\Setup.bat
            cd ..
            ls Unreal\Engine\Binaries\Win64\*.exe
-      - name: build project
+      - name: Cache Project
+        id: project_cache
+        uses: actions/cache@v3
+        with:
+          path: project
+          key: "Project_Cache"
+      - name: Checkout Project
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          path: project
+      - name: Build Project
         run: |
-          pwd
-          ls
-          echo ${{ inputs.project_file }}
-        # Engine/Build/BatchFiles/RunUAT.sh BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project=/project/${{ inputs.project_file }}.uproject -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory=/project/Packaged
-
+          ls project\
+          Unreal/Engine/Build/BatchFiles/RunUAT.sh BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project=/project/${{ inputs.project_file }}.uproject -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory=/project/Packaged
+      - name: Set result to Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.project_file }}_pkg
+          path: project\packaged\Windows\
