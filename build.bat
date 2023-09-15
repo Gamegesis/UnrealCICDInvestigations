@@ -1,0 +1,1 @@
+D:\Software\"Epic Games"\UE_5.1\Engine\Build\BatchFiles\RunUAT.bat BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project=%1 -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory=%2
