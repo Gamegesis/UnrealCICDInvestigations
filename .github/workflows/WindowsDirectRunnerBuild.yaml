@@ -51,12 +51,13 @@ jobs:
         run: |
           ls project\
           pwd
-          $env:projDir=pwd
-          echo $env:projDir
-          $env:projectD=$env:projDir+"/project/${{ inputs.project_file }}.uproject"
-          echo $env:projectD
-          $env:packageD=$env:projDir+"/project/Packaged"
-          D:\Software\"Epic Games"\UE_5.1\Engine\Build\BatchFiles\RunUAT.bat BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project="$env:projectD" -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory="$env:packageD"
+          $projDir=pwd
+          echo $projDir
+          $projectD=$env:projDir+"\project\CI_CD_Inv_Game\${{ inputs.project_file }}.uproject"
+          echo $projectD
+          $packageD=$env:projDir+"\project\CI_CD_Inv_Game\Packaged"
+          project\build.bat $projectD $packageD
+#          D:\Software\"Epic Games"\UE_5.1\Engine\Build\BatchFiles\RunUAT.bat BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project="$env:projectD" -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory="$env:packageD"
       - name: Set result to Upload
         uses: actions/upload-artifact@v3
         with:
