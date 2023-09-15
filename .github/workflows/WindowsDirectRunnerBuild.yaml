@@ -56,10 +56,14 @@ jobs:
           $projectD=$projDir.path+"\project\CI_CD_Inv_Game\${{ inputs.project_file }}.uproject"
           echo $projectD
           $packageD=$projDir.path+"\project\CI_CD_Inv_Game\Packaged"
+          echo "packageDir=$packageD" >> "$GITHUB_ENV"
           project\build.bat $projectD $packageD
 #          D:\Software\"Epic Games"\UE_5.1\Engine\Build\BatchFiles\RunUAT.bat BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project="$env:projectD" -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory="$env:packageD"
       - name: Set result to Upload
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.project_file }}_pkg
-          path: project\packaged\Windows\
+          path: $packageDir
+
+
+          
