@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.project_file }}_pkg
-          path: {{ $packageDir }}
+          path: project/CI_CD_Inv_Game/Packaged/
 
 
           
