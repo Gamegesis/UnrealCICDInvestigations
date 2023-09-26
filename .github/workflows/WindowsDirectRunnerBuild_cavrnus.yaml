@@ -33,19 +33,23 @@ jobs:
           path: project       # the path where the project will be extracted. Package and PluginPackage will be stored in the same level as the project
       - name: Build Project
         run: |
-          ls project\
           cd project
           ./AutoBuild.bat ${{ inputs.project_name }} ${{ inputs.engine_folder }}
       - name: Build Plugin
         run: |
-          
-      - name: Set result to Upload
+          cd project
+          ./PackagePlugin.bat ${{ inputs.project_name }} ${{ inputs.engine_folder }}
+      - name: Set Package to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.project_file }}_pkg
-          path: project/CI_CD_Inv_Game/Packaged/
-      - name: Build Plugin
-        run: |
+          name: ${{ inputs.project_name }}_pkg
+          path: Package/
+      - name: Set Plugin to Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.plugin_name }}_pkg
+          path: PackagePlugin/
+        
           
 
 
