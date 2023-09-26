@@ -47,21 +47,21 @@ jobs:
         with:
           lfs: true
           path: project
-      - name: test chdir
+      - name: test dir
         run: |
-          cd project
+          echo "**************************************************************************************"
+          echo "                                      Current Dir"
+          echo "**************************************************************************************"
           pwd
-          ls
-      - name: test Dir 2
-        run: |
-          pwd
-          ls
-          echo "going back 1"
-          cd ..
-          pwd
+          echo "**************************************************************************************"
+          echo "                                      Listing Dir"
+          echo "**************************************************************************************"
           ls
       - name: Build Project
         run: |
+          echo "**************************************************************************************"
+          echo "                                    Building Project"
+          echo "**************************************************************************************"
           ls project\
           pwd
           $projDir=pwd
@@ -78,7 +78,7 @@ jobs:
           name: ${{ inputs.project_file }}_pkg
           path: project/CI_CD_Inv_Game/Packaged/
       - name: Build Plugin
-        run: |
+        run: | 
           
 
 
