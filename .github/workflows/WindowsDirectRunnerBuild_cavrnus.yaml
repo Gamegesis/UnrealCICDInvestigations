@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-          path: project       # the path where the project will be extracted. Package and PluginPackage will be stored in the same level as the project
+          path: project       # the path where the project will be extracted. Package and PluginPackage will be stored in the same dir level as the project dir
       - name: Build Project
         run: |
           cd project
