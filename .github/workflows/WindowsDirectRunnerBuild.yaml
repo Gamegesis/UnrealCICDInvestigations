@@ -47,6 +47,19 @@ jobs:
         with:
           lfs: true
           path: project
+      - name: test chdir
+        run: |
+          cd project
+          pwd
+          ls
+      - name: test Dir 2
+        run: |
+          pwd
+          ls
+          echo "going back 1"
+          cd ..
+          pwd
+          ls
       - name: Build Project
         run: |
           ls project\
@@ -64,6 +77,9 @@ jobs:
         with:
           name: ${{ inputs.project_file }}_pkg
           path: project/CI_CD_Inv_Game/Packaged/
+      - name: Build Plugin
+        run: |
+          
 
 
           

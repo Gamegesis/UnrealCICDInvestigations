@@ -1,0 +1,52 @@
+name: Cavrnus Windows Direct Project Build
+on: 
+  workflow_dispatch:
+    inputs:
+      engine_folder:
+        description: The folder where Unreal is installed in the Runner machine
+        type: string
+        required: true
+      project_name:
+        description: The project name
+        type: string
+        required: true
+      plugin_name:
+        description: The plugin name
+        type: string
+        required: true
+jobs:
+  windows_direct_runner_build:
+    runs-on: self-hosted
+    steps:
+      - name: Config Git for Long Paths
+        run: git config --global core.longpaths true
+      - name: Cache Project
+        id: project_cache
+        uses: actions/cache@v3  # Caches the Cavrnus Connector plugin resources
+        with:
+          path: project/Plugins/CavrnusConnector
+          key: "Plugin_Cache"
+      - name: Checkout Project
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          path: project       # the path where the project will be extracted. Package and PluginPackage will be stored in the same level as the project
+      - name: Build Project
+        run: |
+          ls project\
+          cd project
+          ./AutoBuild.bat ${{ inputs.project_name }} ${{ inputs.engine_folder }}
+      - name: Build Plugin
+        run: |
+          
+      - name: Set result to Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.project_file }}_pkg
+          path: project/CI_CD_Inv_Game/Packaged/
+      - name: Build Plugin
+        run: |
+          
+
+
+          
