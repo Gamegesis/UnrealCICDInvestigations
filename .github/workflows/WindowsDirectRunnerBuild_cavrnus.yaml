@@ -1,17 +1,13 @@
 name: Cavrnus Windows Direct Project Build
 on: 
+  push: 
   workflow_dispatch:
-    inputs:
-      engine_folder:
-        description: The folder where Unreal is installed in the Runner machine
+      project_package_name:
+        description: The project package name
         type: string
         required: true
-      project_name:
-        description: The project name
-        type: string
-        required: true
-      plugin_name:
-        description: The plugin name
+      plugin_package_name:
+        description: The plugin package name
         type: string
         required: true
 jobs:
@@ -34,11 +30,11 @@ jobs:
       - name: Build Project
         run: |
           cd project
-          ./AutoBuild.bat ${{ inputs.project_name }} ${{ inputs.engine_folder }}
+          ./AutoBuild.bat ${{ inputs.project_name }} ${{ vars.UNREAL_PATH }}
       - name: Build Plugin
         run: |
           cd project
-          ./PackagePlugin.bat ${{ inputs.project_name }} ${{ inputs.engine_folder }}
+          ./PackagePlugin.bat ${{ inputs.project_name }} ${{ vars.UNREAL_PATH }}
       - name: Set Package to Upload
         uses: actions/upload-artifact@v3
         with:
