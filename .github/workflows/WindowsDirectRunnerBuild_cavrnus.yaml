@@ -1,6 +1,5 @@
 name: Cavrnus Windows Direct Project Build
 on: 
-  push: 
   workflow_dispatch:
       project_package_name:
         description: The project package name
