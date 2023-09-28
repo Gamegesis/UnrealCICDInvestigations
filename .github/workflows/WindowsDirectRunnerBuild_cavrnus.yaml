@@ -1,19 +1,7 @@
 name: Cavrnus Windows Direct Project Build
 on: 
-  workflow_dispatch:
-    inputs:
-      engine_folder:
-        description: The folder where Unreal is installed in the Runner machine
-        type: string
-        required: true
-      project_name:
-        description: The project name
-        type: string
-        required: true
-      plugin_name:
-        description: The plugin name
-        type: string
-        required: true
+  push:
+    branches: "dev/chn/lcl-runner"
 jobs:
   windows_direct_runner_build:
     runs-on: self-hosted
@@ -30,25 +18,22 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-          path: project       # the path where the project will be extracted. Package and PluginPackage will be stored in the same dir level as the project dir
       - name: Build Project
         run: |
-          cd project
-          ./AutoBuild.bat ${{ inputs.project_name }} ${{ inputs.engine_folder }}
+          ./Scripts/AutoBuild.bat ${{ vars.PROJ_NAME }} ${{ vars.UNREAL_PATH }}
       - name: Build Plugin
         run: |
-          cd project
-          ./PackagePlugin.bat ${{ inputs.project_name }} ${{ inputs.engine_folder }}
+          ./Scripts/PackagePlugin.bat ${{ vars.PLUGIN_NAME }} ${{ vars.UNREAL_PATH }}
       - name: Set Package to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.project_name }}_pkg
-          path: Package/
+          name: ${{ vars.PROJ_NAME }}_pkg
+          path: Package/${{ vars.PROJ_NAME }}
       - name: Set Plugin to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.plugin_name }}_pkg
-          path: PackagePlugin/
+          name: ${{ vars.PLUGIN_NAME }}_pkg
+          path: PackagePlugin/${{ vars.PLUGIN_NAME }}
         
           
 
