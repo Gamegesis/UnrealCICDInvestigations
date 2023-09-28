@@ -1,0 +1,109 @@
+name: Windows Direct Project Build 2
+on: 
+  workflow_dispatch:
+    inputs:
+      project_file:
+        description: The uproject project file name without the extension
+        type: string
+        required: true
+
+jobs:
+  windows_direct_runner_build:
+    runs-on: self-hosted
+    steps:
+      - name: Config Git for Long Paths
+        run: git config --global core.longpaths true
+#      - name: Caching Unreal 
+#        id: UnrealEngine_Cache
+#        uses: actions/cache@v3
+#        with:
+#          path: Unreal
+#          key: "Unreal_Cache"
+#      - name: Display Cache Output
+#        run: echo '${{ toJSON(steps.UnrealEngine_Cache.outputs) }}'
+#      - name: Retrieve Engine
+#        uses: actions/checkout@v4
+#        with:
+#           lfs: true
+#           ref: release
+#           token: ${{ secrets.PAT_TOKEN }}
+#           repository: EpicGames/UnrealEngine
+#           path: Unreal
+#      - name: Build Unreal Engine
+#        run: |
+#           cd Unreal
+#           ls
+#           .\Setup.bat
+#           cd ..
+#           ls Unreal\Engine\Binaries\Win64\*.exe
+      - name: Cache Project
+        id: project_cache
+        uses: actions/cache@v3
+        with:
+          path: project
+          key: "Project_Cache"
+      - name: Checkout Project
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          path: project
+      # - name: test dir
+      #   run: |
+      #     echo "**************************************************************************************"
+      #     echo "                                      Current Dir"
+      #     echo "**************************************************************************************"
+      #     pwd
+      #     echo "**************************************************************************************"
+      #     echo "                                      Listing Dir"
+      #     echo "**************************************************************************************"
+      #     dir
+      # - name: change to project
+      #   run: |
+      #     echo "**************************************************************************************"
+      #     echo "                                      Changing Dir"
+      #     echo "**************************************************************************************"
+      #     cd project\
+      #     echo "**************************************************************************************"
+      #     echo "                                      Current Dir"
+      #     echo "**************************************************************************************"
+      #     pwd
+      #     echo "**************************************************************************************"
+      #     echo "                                      Listing Dir"
+      #     echo "**************************************************************************************"
+      #     dir
+      # - name: Testing Dir switch persistence between steps
+      #   run: |
+      #     echo "**************************************************************************************"
+      #     echo "                                      Current Dir"
+      #     echo "**************************************************************************************"
+      #     pwd
+      #     echo "**************************************************************************************"
+      #     echo "                                      Listing Dir"
+      #     echo "**************************************************************************************"
+      #     ls
+      #     cd ..
+      - name: Build Project
+        run: |
+          echo "**************************************************************************************"
+          echo "                                    Building Project"
+          echo "**************************************************************************************"
+          dir project\
+          pwd
+          $projDir=pwd
+          echo $projDir
+          $projectD=$projDir.path+"\project\CI_CD_Inv_Game\${{ vars.PROJ_NAME }}.uproject"
+          echo $projectD
+          $packageD=$projDir.path+"\project\CI_CD_Inv_Game\Packaged"
+          echo "packageDir=$packageD" >> "$GITHUB_ENV"
+          project\build.bat ${{ vars.UNREAL_PATH }} $projectD $packageD
+#          D:\Software\"Epic Games"\UE_5.1\Engine\Build\BatchFiles\RunUAT.bat BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project="$env:projectD" -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory="$env:packageD"
+      - name: Set result to Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.project_file }}_pkg
+          path: project/CI_CD_Inv_Game/Packaged/
+
+          
+
+
+          
