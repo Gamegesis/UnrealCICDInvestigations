@@ -1,14 +1,7 @@
 name: Cavrnus Windows Direct Project Build
 on: 
-  workflow_dispatch:
-      project_package_name:
-        description: The project package name
-        type: string
-        required: true
-      plugin_package_name:
-        description: The plugin package name
-        type: string
-        required: true
+  push:
+    branches: "dev/chn/lcl-runner"
 jobs:
   windows_direct_runner_build:
     runs-on: self-hosted
@@ -29,21 +22,21 @@ jobs:
       - name: Build Project
         run: |
           cd project
-          ./AutoBuild.bat ${{ inputs.project_name }} ${{ vars.UNREAL_PATH }}
+          ./AutoBuild.bat ${{ vars.PROJ_NAME }} ${{ vars.UNREAL_PATH }}
       - name: Build Plugin
         run: |
           cd project
-          ./PackagePlugin.bat ${{ inputs.project_name }} ${{ vars.UNREAL_PATH }}
+          ./PackagePlugin.bat ${{ vars.PLUGIN_NAME }} ${{ vars.UNREAL_PATH }}
       - name: Set Package to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.project_name }}_pkg
-          path: Package/
+          name: ${{ vars.PROJ_NAME }}_pkg
+          path: Package/${{ vars.PROJ_NAME }}
       - name: Set Plugin to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.plugin_name }}_pkg
-          path: PackagePlugin/
+          name: ${{ vars.PLUGIN_NAME }}_pkg
+          path: PackagePlugin/${{ vars.PLUGIN_NAME }}
         
           
 
