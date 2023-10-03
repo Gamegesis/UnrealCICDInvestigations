@@ -82,6 +82,10 @@ jobs:
       #     echo "**************************************************************************************"
       #     ls
       #     cd ..
+      - name: set datetime
+        run: |
+          echo 'DATETIME = $(Get-Date-Format "yyyy-MM-dd-HH-mm-ss")' >> $GITHUB_ENV
+          echo "Data: ${{ env.DATETIME }}"
       - name: Build Project
         run: |
           echo "**************************************************************************************"
@@ -95,12 +99,14 @@ jobs:
           echo $projectD
           $packageD=$projDir.path+"\project\CI_CD_Inv_Game\Packaged"
           echo "packageDir=$packageD" >> "$GITHUB_ENV"
-          project\build.bat ${{ vars.UNREAL_PATH }} $projectD $packageD
+          echo "building package"
+          project\build2.bat ${{ vars.UNREAL_PATH }} $projectD $packageD
+#          project\build.bat ${{ vars.UNREAL_PATH }} $projectD $packageD
 #          D:\Software\"Epic Games"\UE_5.1\Engine\Build\BatchFiles\RunUAT.bat BuildCookRun -utf8output -platform=Win64 -clientconfig=Shipping -serverconfig=Shipping -project="$env:projectD" -noP4 -nodebuginfo -allmaps -cook -build -stage -prereqs -pak -archive -archivedirectory="$env:packageD"
       - name: Set result to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.project_file }}_pkg
+          name: ${{ inputs.project_file }}_${{ env.DATETIME }}_pkg
           path: project/CI_CD_Inv_Game/Packaged/
 
           
