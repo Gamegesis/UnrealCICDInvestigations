@@ -106,7 +106,7 @@ jobs:
       - name: Set result to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.project_file }}_${{ $env:DATETIME }}_pkg
+          name: ${{ inputs.project_file }}_${{ env.DATETIME }}_pkg
           path: project/CI_CD_Inv_Game/Packaged/
 
           
