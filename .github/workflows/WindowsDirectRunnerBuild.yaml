@@ -85,7 +85,7 @@ jobs:
       - name: set datetime
         run: |
           echo 'DATETIME = $(Get-Date-Format "yyyy-MM-dd-HH-mm-ss")' | Out-File -FilePath $env:GITHUB_ENV -Append
-          echo "Data: $env.DATETIME" 
+          echo "Data: $env:DATETIME" 
       - name: Build Project
         run: |
           echo "**************************************************************************************"
@@ -106,7 +106,7 @@ jobs:
       - name: Set result to Upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.project_file }}_$env.DATETIME_pkg
+          name: ${{ inputs.project_file }}_${{ $env:DATETIME }}_pkg
           path: project/CI_CD_Inv_Game/Packaged/
 
           
