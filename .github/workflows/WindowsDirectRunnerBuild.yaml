@@ -84,10 +84,11 @@ jobs:
       #     cd ..
       - name: set datetime
         run: |
-          echo 'DATETIME = $(Get-Date-Format "yyyy-MM-dd-HH-mm-ss")' | Out-File -FilePath $env:GITHUB_ENV -Append
-          echo "Data: ${{ env:DATETIME }}" 
+          echo 'DATE_TIME = $(Get-Date-Format "yyyy-MM-dd-HH-mm-ss")' | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "Data: $env:DATE_TIME" 
       - name: Build Project
         run: |
+          echo "Data: $env:DATE_TIME" 
           echo "**************************************************************************************"
           echo "                                    Building Project"
           echo "**************************************************************************************"
